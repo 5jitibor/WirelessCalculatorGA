@@ -62,7 +62,7 @@ public class Calculator {
         else{
             results.put(TypeScenarioEnum.BIGCITY, ((3.2 * Math.pow(log10(11.75 * hm), 2)) - 4.97));
             if(f>1500){
-                results.put(TypeScenarioEnum.BIGCITY, results.get(TypeScenarioEnum.BIGCITY) +3);
+                results.put(TypeScenarioEnum.BIGCITY, results.get(TypeScenarioEnum.BIGCITY) - 3);
             }
         }
 

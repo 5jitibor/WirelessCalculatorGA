@@ -64,7 +64,7 @@ public class GUI {
 		window = new JFrame("Wireless Calculator");
 		appTitle = new JLabel("Wireless Calculator");
 		appTitle.putClientProperty( "FlatLaf.styleClass", "h00" );
-		descriptionText = new JLabel("<html>Introduce the following data to calculate the distance or the loss propagation</html>");
+		descriptionText = new JLabel("<html>Introduce the following data to calculate the coverage or the loss propagation</html>");
 		descriptionText.setPreferredSize(new Dimension(400, 50));
 		descriptionText.putClientProperty( "FlatLaf.styleClass", "large" );
 		initializateTextFields();
@@ -281,9 +281,10 @@ public class GUI {
 		c.gridx = 1;
 		c.gridy = 4;
 		c.insets = new Insets(0, 0, 10, 0);
-		JLabel numtextsrxTag = new JLabel("Sensibility transmiser (dbm)");
-		numtextsrxTag.putClientProperty( "FlatLaf.styleClass", "h2" );
-		panel.add(numtextsrxTag, c);
+		JLabel numtextgrxTag = new JLabel("Gain reciever (db)");
+		numtextgrxTag.putClientProperty( "FlatLaf.styleClass", "h2" );
+		panel.add(numtextgrxTag, c);
+
 
 		c.gridy = 5;
 		c.insets = new Insets(0, 0, 30, 0);
@@ -294,11 +295,10 @@ public class GUI {
 
 		c.gridx = 0;
 		c.gridy = 6;
-
 		c.insets = new Insets(0, 0, 10, 0);
-		JLabel numtextgrxTag = new JLabel("Gain reciever (db)");
-		numtextgrxTag.putClientProperty( "FlatLaf.styleClass", "h2" );
-		panel.add(numtextgrxTag, c);
+		JLabel numtextsrxTag = new JLabel("Sensibility reciever (dbm)");
+		numtextsrxTag.putClientProperty( "FlatLaf.styleClass", "h2" );
+		panel.add(numtextsrxTag, c);
 
 		c.gridy = 7;
 		c.insets = new Insets(0, 0, 10, 0);

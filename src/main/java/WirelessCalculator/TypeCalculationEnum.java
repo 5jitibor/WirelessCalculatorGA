@@ -15,7 +15,7 @@ public enum TypeCalculationEnum {
     public String toMetric(){
         return switch (this) {
             case LOSSPROPAGATION -> "dB";
-            case COVERAGE -> "m";
+            case COVERAGE -> "Km";
         };
     }
 }
