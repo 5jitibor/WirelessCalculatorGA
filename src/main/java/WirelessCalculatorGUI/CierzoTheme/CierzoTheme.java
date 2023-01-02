@@ -46,6 +46,7 @@ public class CierzoTheme extends FlatLightLaf {
 		UIManager.put( "h0.font", new FontUIResource("Recoleta", Font.PLAIN, 33));
 		UIManager.put( "h1.font", new FontUIResource( "Recoleta", Font.PLAIN, 27));
 		UIManager.put( "h2.font", new FontUIResource("Recoleta", Font.PLAIN, 21));
+		UIManager.put( "h3.font", new FontUIResource("Poppins", Font.PLAIN, 15));
 		UIManager.put( "Large.font", new FontUIResource("Recoleta", Font.PLAIN, 20));
 
 		UIManager.put( "Button.foreground", white );

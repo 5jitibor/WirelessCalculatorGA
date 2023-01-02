@@ -6,6 +6,8 @@ import WirelessCalculator.TypeCalculationEnum;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -20,24 +22,31 @@ public class GUI {
 	private JLabel appTitle;
 	private JLabel descriptionText;
 
-	private JTextField numtextf;
-	private JTextField numtexthb;
-	private JTextField numtexthm;
+	private JTextField numtextfCov;
+	private JTextField numtextfLProp;
+	private double numtextfValue;
+	private JTextField numtexthbCov;
+	private JTextField numtexthbLProp;
+	private double numtexthbValue;
+	private JTextField numtexthmCov;
+	private JTextField numtexthmLProp;
+	private double numtexthmValue;
 	private JTextField numtextd;
 	private JTextField numtextptx;
 	private JTextField numtextgtx;
 	private JTextField numtextsrx;
 	private JTextField numtextgrx;
 	private JButton buttonResult;
+	private JPanel tabbedPanel;
 	private JPanel panelLossPropagation;
 	private JPanel panelCoverage;
-
 	JToggleButton lossPropagation;
 	JToggleButton coverage;
-
+	final static String COVERAGEPANEL = "Coverage";
+	final static String LOSSPROPAGATIONPANEL = "Propagation Loss";
 
 	public GUI() {
-		initializateComponents();
+		initializeComponents();
 		InputStream file = getClass().getClassLoader().getResourceAsStream("icon.png");
 		BufferedImage bImage;
 		try {
@@ -59,50 +68,72 @@ public class GUI {
 		window.setVisible(true);
 	}
 	
-	public void initializateComponents() {
+	public void initializeComponents() {
    		//To create the Frame
 		window = new JFrame("Wireless Calculator");
 		appTitle = new JLabel("Wireless Calculator");
 		appTitle.putClientProperty( "FlatLaf.styleClass", "h00" );
 		descriptionText = new JLabel("<html>Introduce the following data to calculate the coverage or the loss propagation</html>");
-		descriptionText.setPreferredSize(new Dimension(400, 50));
+		descriptionText.setPreferredSize(new Dimension(500, 50));
 		descriptionText.putClientProperty( "FlatLaf.styleClass", "large" );
-		initializateTextFields();
+		initializeTextFields();
 		buttonResult = new JButton("Get results");
-		lossPropagation = new JToggleButton("Loss Propagation");
-		lossPropagation.setSelected(true);
-		coverage = new JToggleButton("Coverage");
+		lossPropagation = new JToggleButton(LOSSPROPAGATIONPANEL);
+		coverage = new JToggleButton(COVERAGEPANEL);
+		coverage.setSelected(true);
 	 }
 
-	 public void initializateTextFields(){
-		 numtextf = new JTextField(10);
-		 numtextf.setHorizontalAlignment(JTextField.RIGHT);
-		 numtextf.setFont(new Font("Poppins", Font.PLAIN, 15));
-		 numtextf.addKeyListener(new JTextFieldNumListener(numtextf));
-		 numtexthb = new JTextField(10);
-		 numtexthb.setHorizontalAlignment(JTextField.RIGHT);
-		 numtexthb.setFont(new Font("Poppins", Font.PLAIN, 15));
-		 numtexthb.addKeyListener(new JTextFieldNumListener(numtexthb));
-		 numtexthm = new JTextField(10);
-		 numtexthm.setHorizontalAlignment(JTextField.RIGHT);
-		 numtexthm.setFont(new Font("Poppins", Font.PLAIN, 15));
-		 numtexthm.addKeyListener(new JTextFieldNumListener(numtexthm));
+	 public void initializeTextFields(){
+		 numtextfCov = new JTextField(10);
+		 numtextfCov.setHorizontalAlignment(JTextField.RIGHT);
+		 numtextfCov.setFont(new Font("Poppins", Font.PLAIN, 15));
+		 numtextfCov.addKeyListener(new JTextFieldNumListener(numtextfCov));
+
+		 numtextfLProp = new JTextField(10);
+		 numtextfLProp.setHorizontalAlignment(JTextField.RIGHT);
+		 numtextfLProp.setFont(new Font("Poppins", Font.PLAIN, 15));
+		 numtextfLProp.addKeyListener(new JTextFieldNumListener(numtextfLProp));
+
+		 numtexthbCov = new JTextField(10);
+		 numtexthbCov.setHorizontalAlignment(JTextField.RIGHT);
+		 numtexthbCov.setFont(new Font("Poppins", Font.PLAIN, 15));
+		 numtexthbCov.addKeyListener(new JTextFieldNumListener(numtexthbCov));
+
+		 numtexthbLProp = new JTextField(10);
+		 numtexthbLProp.setHorizontalAlignment(JTextField.RIGHT);
+		 numtexthbLProp.setFont(new Font("Poppins", Font.PLAIN, 15));
+		 numtexthbLProp.addKeyListener(new JTextFieldNumListener(numtexthbLProp));
+
+		 numtexthmCov = new JTextField(10);
+		 numtexthmCov.setHorizontalAlignment(JTextField.RIGHT);
+		 numtexthmCov.setFont(new Font("Poppins", Font.PLAIN, 15));
+		 numtexthmCov.addKeyListener(new JTextFieldNumListener(numtexthmCov));
+
+		 numtexthmLProp = new JTextField(10);
+		 numtexthmLProp.setHorizontalAlignment(JTextField.RIGHT);
+		 numtexthmLProp.setFont(new Font("Poppins", Font.PLAIN, 15));
+		 numtexthmLProp.addKeyListener(new JTextFieldNumListener(numtexthmLProp));
+
 		 numtextd = new JTextField(10);
 		 numtextd.setHorizontalAlignment(JTextField.RIGHT);
 		 numtextd.setFont(new Font("Poppins", Font.PLAIN, 15));
 		 numtextd.addKeyListener(new JTextFieldNumListener(numtextd));
+
 		 numtextptx = new JTextField(10);
 		 numtextptx.setHorizontalAlignment(JTextField.RIGHT);
 		 numtextptx.setFont(new Font("Poppins", Font.PLAIN, 15));
 		 numtextptx.addKeyListener(new JTextFieldNumListener(numtextptx));
+
 		 numtextgtx = new JTextField(10);
 		 numtextgtx.setHorizontalAlignment(JTextField.RIGHT);
 		 numtextgtx.setFont(new Font("Poppins", Font.PLAIN, 15));
 		 numtextgtx.addKeyListener(new JTextFieldNumListener(numtextgtx));
+
 		 numtextsrx = new JTextField(10);
 		 numtextsrx.setHorizontalAlignment(JTextField.RIGHT);
 		 numtextsrx.setFont(new Font("Poppins", Font.PLAIN, 15));
 		 numtextsrx.addKeyListener(new JTextFieldNumListener(numtextsrx));
+
 		 numtextgrx = new JTextField(10);
 		 numtextgrx.setHorizontalAlignment(JTextField.RIGHT);
 		 numtextgrx.setFont(new Font("Poppins", Font.PLAIN, 15));
@@ -112,24 +143,17 @@ public class GUI {
 	public void  setLayout() {
 		JPanel panel = new JPanel();
 		panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-		panel.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
+		panel.setLayout(new BorderLayout());
 
-		c.gridx = 0;
-		c.gridy = 0;
-		panel.add(generateTitleAndDescription(), c);
+		JPanel topPanel = new JPanel(new GridLayout(2, 1));
+		topPanel.add(generateTitleAndDescription());
+		topPanel.add(generateOptionSelection());
+		panel.add(topPanel, BorderLayout.NORTH);
 
-		c.gridy = 1;
-		panel.add(generateOptionSelection(), c);
+		tabbedPanel = generateTabbedPanel();
+		panel.add(tabbedPanel, BorderLayout.CENTER);
 
-		c.gridy = 2;
-		c.insets = new Insets(10, 0, 0, 0);
-		panelLossPropagation = generateLossPropagationPanel();
-		panel.add(panelLossPropagation, c);
-
-		c.gridy = 3;
-		panel.add(generateButtonRow(), c);
+		panel.add(generateButtonRow(), BorderLayout.SOUTH);
 		
 		window.setContentPane(panel);
 		window.pack();
@@ -161,57 +185,57 @@ public class GUI {
 		panel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridwidth = 1;
 		c.gridheight = 1;
 		c.weightx = 0.5;
 
 		c.gridx = 0;
 		c.gridy = 0;
-		c.insets = new Insets(0, 0, 10, 0);
-		JLabel numtextfTag = new JLabel("Frequency (Hz)");
+		c.gridwidth = 2;
+		c.insets = new Insets(0, 0, 10, 10);
+		JLabel numtextfTag = new JLabel("Frequency");
 		numtextfTag.putClientProperty( "FlatLaf.styleClass", "h2" );
 		panel.add(numtextfTag, c);
 
 		c.gridy = 1;
-		c.insets = new Insets(0, 0, 30, 10);
-		panel.add(numtextf, c);
-
-		c.gridx = 1;
-		c.gridy = 0;
-		c.insets = new Insets(0, 0, 10, 0);
-		JLabel numtexthbTag = new JLabel("Height base (m)");
-		numtexthbTag.putClientProperty( "FlatLaf.styleClass", "h2" );
-		panel.add(numtexthbTag, c);
-
-		c.gridy = 1;
-		c.insets = new Insets(0, 0, 30, 10);
-		panel.add(numtexthb, c);
+		c.insets = new Insets(0, 0, 20, 10);
+		panel.add(generateFieldWithUnits(numtextfLProp, "MHz"), c);
 
 		c.gridx = 0;
 		c.gridy = 2;
-		c.insets = new Insets(0, 0, 10, 0);
-		JLabel numtexthmTag = new JLabel("Height mobile (m)");
+		c.gridwidth = 1;
+		c.insets = new Insets(0, 0, 10, 20);
+		JLabel numtexthbTag = new JLabel("Height base");
+		numtexthbTag.putClientProperty( "FlatLaf.styleClass", "h2" );
+		panel.add(numtexthbTag, c);
+
+		c.gridy = 3;
+		c.insets = new Insets(0, 0, 20, 20);
+		panel.add(generateFieldWithUnits(numtexthbLProp, "m"), c);
+
+		c.gridx = 1;
+		c.gridy = 2;
+		c.insets = new Insets(0, 0, 10, 10);
+		JLabel numtexthmTag = new JLabel("Height mobile");
 		numtexthmTag.putClientProperty( "FlatLaf.styleClass", "h2" );
 		panel.add(numtexthmTag, c);
 
 		c.gridy = 3;
-		c.insets = new Insets(0, 0, 10, 10);
-		panel.add(numtexthm, c);
+		c.insets = new Insets(0, 0, 20, 10);
+		panel.add(generateFieldWithUnits(numtexthmLProp, "m"), c);
 
-		c.gridx = 1;
-		c.gridy = 2;
-		c.insets = new Insets(0, 0, 10, 0);
-		JLabel numtextdTag = new JLabel("Distance (Km)");
+		c.gridx = 0;
+		c.gridy = 4;
+		c.gridwidth = 2;
+		c.insets = new Insets(0, 0, 10, 10);
+		JLabel numtextdTag = new JLabel("Distance");
 		numtextdTag.putClientProperty( "FlatLaf.styleClass", "h2" );
 		panel.add(numtextdTag, c);
 
-		c.gridy = 3;
-		c.insets = new Insets(0, 0, 10, 10);
-		panel.add(numtextd, c);
-
+		c.gridy = 5;
+		c.insets = new Insets(0, 0, 20, 10);
+		panel.add(generateFieldWithUnits(numtextd, "Km"), c);
 
 		return panel;
-	       
 	}
 
 	public JPanel generateCoveragePanel() {
@@ -219,94 +243,110 @@ public class GUI {
 		panel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridwidth = 1;
 		c.gridheight = 1;
 		c.weightx = 0.5;
 
 		c.gridx = 0;
 		c.gridy = 0;
-		c.insets = new Insets(0, 0, 10, 0);
-		JLabel numtextfTag = new JLabel("Frequency (Hz)");
+		c.gridwidth = 2;
+		c.insets = new Insets(0, 0, 10, 10);
+		JLabel numtextfTag = new JLabel("Frequency");
 		numtextfTag.putClientProperty( "FlatLaf.styleClass", "h2" );
 		panel.add(numtextfTag, c);
 
 		c.gridy = 1;
-		c.insets = new Insets(0, 0, 30, 10);
-		panel.add(numtextf, c);
+		c.insets = new Insets(0, 0, 20, 10);
+		panel.add(generateFieldWithUnits(numtextfCov, "MHz"), c);
 
-		c.gridx = 1;
-		c.gridy = 0;
-		c.insets = new Insets(0, 0, 10, 0);
-		JLabel numtexthbTag = new JLabel("Height base (m)");
+		c.gridy = 2;
+		c.gridwidth = 1;
+		c.insets = new Insets(0, 0, 10, 20);
+		JLabel numtexthbTag = new JLabel("Height base");
 		numtexthbTag.putClientProperty( "FlatLaf.styleClass", "h2" );
 		panel.add(numtexthbTag, c);
 
-		c.gridy = 1;
-		c.insets = new Insets(0, 0, 30, 0);
-		panel.add(numtexthb, c);
+		c.gridy = 3;
+		c.insets = new Insets(0, 0, 20, 20);
+		panel.add(generateFieldWithUnits(numtexthbCov, "m"), c);
 
-		c.gridx = 0;
+		c.gridx = 1;
 		c.gridy = 2;
-		c.insets = new Insets(0, 0, 10, 0);
-		JLabel numtexthmTag = new JLabel("Height mobile (m)");
+		c.insets = new Insets(0, 0, 10, 10);
+		JLabel numtexthmTag = new JLabel("Height mobile");
 		numtexthmTag.putClientProperty( "FlatLaf.styleClass", "h2" );
 		panel.add(numtexthmTag, c);
 
 		c.gridy = 3;
-		c.insets = new Insets(0, 0, 30, 10);
-		panel.add(numtexthm, c);
-
-		c.gridx = 1;
-		c.gridy = 2;
-		c.insets = new Insets(0, 0, 10, 0);
-		JLabel numtextptxTag = new JLabel("Power transmiser (dbm)");
-		numtextptxTag.putClientProperty( "FlatLaf.styleClass", "h2" );
-		panel.add(numtextptxTag, c);
-
-		c.gridy = 3;
-		c.insets = new Insets(0, 0, 30, 0);
-		panel.add(numtextptx, c);
+		c.insets = new Insets(0, 0, 20, 10);
+		panel.add(generateFieldWithUnits(numtexthmCov, "m"), c);
 
 		c.gridx = 0;
 		c.gridy = 4;
-		c.insets = new Insets(0, 0, 10, 0);
-		JLabel numtextgtxTag = new JLabel("Gain trasmiser (db)");
+		c.insets = new Insets(0, 0, 10, 20);
+		JLabel numtextptxTag = new JLabel("Power transmitter");
+		numtextptxTag.putClientProperty( "FlatLaf.styleClass", "h2" );
+		panel.add(numtextptxTag, c);
+
+		c.gridy = 5;
+		c.insets = new Insets(0, 0, 20, 20);
+		panel.add(generateFieldWithUnits(numtextptx, "dBm"), c);
+
+		c.gridx = 1;
+		c.gridy = 4;
+		c.insets = new Insets(0, 0, 10, 10);
+		JLabel numtextgtxTag = new JLabel("Gain transmitter");
 		numtextgtxTag.putClientProperty( "FlatLaf.styleClass", "h2" );
 		panel.add(numtextgtxTag, c);
 
 		c.gridy = 5;
-		c.insets = new Insets(0, 0, 30, 10);
-		panel.add(numtextgtx, c);
+		c.insets = new Insets(0, 0, 20, 10);
+		panel.add(generateFieldWithUnits(numtextgtx, "dB"), c);
 
-		c.gridx = 1;
-		c.gridy = 4;
-		c.insets = new Insets(0, 0, 10, 0);
-		JLabel numtextgrxTag = new JLabel("Gain reciever (db)");
+		c.gridx = 0;
+		c.gridy = 6;
+		c.insets = new Insets(0, 0, 10, 20);
+		JLabel numtextgrxTag = new JLabel("Gain receiver");
 		numtextgrxTag.putClientProperty( "FlatLaf.styleClass", "h2" );
 		panel.add(numtextgrxTag, c);
 
 
-		c.gridy = 5;
-		c.insets = new Insets(0, 0, 30, 0);
-		panel.add(numtextsrx, c);
+		c.gridy = 7;
+		c.insets = new Insets(0, 0, 20, 20);
+		panel.add(generateFieldWithUnits(numtextgrx, "dB"), c);
 
-		c.weightx = 1;
-		c.gridwidth = 2;
-
-		c.gridx = 0;
+		c.gridx = 1;
 		c.gridy = 6;
-		c.insets = new Insets(0, 0, 10, 0);
-		JLabel numtextsrxTag = new JLabel("Sensibility reciever (dbm)");
+		c.insets = new Insets(0, 0, 10, 10);
+		JLabel numtextsrxTag = new JLabel("Sensibility receiver");
 		numtextsrxTag.putClientProperty( "FlatLaf.styleClass", "h2" );
 		panel.add(numtextsrxTag, c);
 
 		c.gridy = 7;
-		c.insets = new Insets(0, 0, 10, 0);
-		panel.add(numtextgrx, c);
+		c.insets = new Insets(0, 0, 20, 10);
+		panel.add(generateFieldWithUnits(numtextsrx, "dBm"), c);
 
 
 		return panel;
+	}
 
+	private JPanel generateFieldWithUnits(JTextField field, String units) {
+		JPanel fieldRow = new JPanel(new BorderLayout(10, 0));
+		fieldRow.add(field, BorderLayout.CENTER);
+		JLabel unitsLabel = new JLabel(units);
+		unitsLabel.putClientProperty("FlatLaf.styleClass", "h3");
+		fieldRow.add(unitsLabel, BorderLayout.EAST);
+		return fieldRow;
+	}
+	public JPanel generateTabbedPanel() {
+		JPanel cards = new JPanel(new CardLayout());
+
+		panelLossPropagation = generateLossPropagationPanel();
+		panelCoverage = generateCoveragePanel();
+
+		cards.add(panelCoverage, COVERAGEPANEL);
+		cards.add(panelLossPropagation, LOSSPROPAGATIONPANEL);
+
+		return cards;
 	}
 	
 	public JPanel generateButtonRow() {
@@ -315,11 +355,8 @@ public class GUI {
 		panel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
 		panel.add(buttonResult);
 		return panel;
-	       
 	}
-	
 
-	
 	public JPanel generateOptionSelection() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
@@ -329,7 +366,7 @@ public class GUI {
 
 		c.gridx = 0;
 		c.gridy = 0;
-		c.gridwidth = 2;
+		c.gridwidth = 1;
 		c.insets = new Insets(20, 0, 10, 0);
 		JLabel paddingTag = new JLabel("What do you want to calculate?");
 		paddingTag.putClientProperty( "FlatLaf.styleClass", "h2" );
@@ -339,29 +376,35 @@ public class GUI {
 	    group.add(lossPropagation);
 	    group.add(coverage);
 
-		c.gridy = 1;
-		c.weightx = 0.5;
-		c.gridwidth = 1;
-		c.insets = new Insets(0, 0, 10, 5);
-		panel.add(coverage, c);
+		JPanel buttonsRow = new JPanel(new GridLayout(1, 2, 10, 10));
+		buttonsRow.add(coverage);
+		buttonsRow.add(lossPropagation);
 
-		c.gridx = 1;
-		c.weightx = 0.5;
-		c.insets = new Insets(0, 5, 10, 0);
-		panel.add(lossPropagation, c);
+		c.gridy = 1;
+		c.insets = new Insets(0, 0, 10, 0);
+		panel.add(buttonsRow, c);
+
 	    return panel;
 	}
-	
-	
+
 	public void listeners() {
+		generateFreqBinding(numtextfCov);
+		generateFreqBinding(numtextfLProp);
+
+		generateHBaseBinding(numtexthbCov);
+		generateHBaseBinding(numtexthbLProp);
+
+		generateHMobileBinding(numtexthmCov);
+		generateHMobileBinding(numtexthmLProp);
+
 		buttonResult.addActionListener(e -> {
 			String error ="";
-			double f = getValue(numtextf);
+			double f = numtextfValue;
 			System.out.println(f);
 			error += checkValue(f,150,2000,"f");
-			double hb = getValue(numtexthb);
+			double hb = numtexthbValue;
 			error += checkValue(hb,30,200,"hb");
-			double hm = getValue(numtexthm);
+			double hm = numtexthmValue;
 			error += checkValue(hm,1,10,"hm");
 			if(lossPropagation.isSelected()){
 				double d = getValue(numtextd);
@@ -390,50 +433,105 @@ public class GUI {
 				}
 
 			}
-
-
-
 		});
 
 		lossPropagation.addActionListener(e -> {
-			if(panelCoverage != null){
-				GridBagConstraints c = new GridBagConstraints();
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 0;
-				c.gridy = 2;
-				c.insets = new Insets(10, 0, 0, 0);
-				JPanel pane = (JPanel) window.getContentPane();
-				pane.remove(panelCoverage);
-				panelCoverage = null;
-				panelLossPropagation = generateLossPropagationPanel();
-				pane.add(panelLossPropagation,c);
-				window.setContentPane(pane);
-				window.pack();
-			}
+			updateLossPropagationPanel();
 
+			CardLayout cl = (CardLayout) (tabbedPanel.getLayout());
+			cl.show(tabbedPanel, LOSSPROPAGATIONPANEL);
+			tabbedPanel.setPreferredSize(new Dimension(500, 312));
+			((Window) tabbedPanel.getTopLevelAncestor()).pack();
 		});
 
 		coverage.addActionListener(e -> {
-			if(panelLossPropagation!= null)
-			{
-				GridBagConstraints c = new GridBagConstraints();
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 0;
-				c.gridy = 2;
-				c.insets = new Insets(10, 0, 0, 0);
-				JPanel pane = (JPanel) window.getContentPane();
-				pane.remove(panelLossPropagation);
-				panelLossPropagation = null;
-				panelCoverage = generateCoveragePanel();
-				pane.add(panelCoverage,c);
-				window.setContentPane(pane);
-				window.pack();
-			}
+			updateCoveragePanel();
 
+			CardLayout cl = (CardLayout) (tabbedPanel.getLayout());
+			cl.show(tabbedPanel, COVERAGEPANEL);
+			tabbedPanel.setPreferredSize(new Dimension(500, 416));
+			((Window) tabbedPanel.getTopLevelAncestor()).pack();
 		});
+	}
 
+	public static String fmt(double d) {
+		if(d == (long) d && d != 0)
+			return String.format("%d",(long)d);
+		else if (d == 0)
+			return "";
+		else
+			return String.format("%s",d);
+	}
+	private void updateLossPropagationPanel() {
+		numtextfLProp.setText(fmt(numtextfValue));
+		numtexthbLProp.setText(fmt(numtexthbValue));
+		numtexthmLProp.setText(fmt(numtexthmValue));
+	}
 
+	private void updateCoveragePanel() {
+		numtextfCov.setText(fmt(numtextfValue));
+		numtexthbCov.setText(fmt(numtexthbValue));
+		numtexthmCov.setText(fmt(numtexthmValue));
+	}
 
+	private void generateHMobileBinding(JTextField numtexthm) {
+		numtexthm.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				updateValue(getValue(numtexthm));
+			}
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				updateValue(getValue(numtexthm));
+			}
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				updateValue(getValue(numtexthm));
+			}
+			public void updateValue(double newValue) {
+				numtexthmValue = newValue;
+			}
+		});
+	}
+
+	private void generateHBaseBinding(JTextField numtexthb) {
+		numtexthb.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				updateValue(getValue(numtexthb));
+			}
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				updateValue(getValue(numtexthb));
+			}
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				updateValue(getValue(numtexthb));
+			}
+			public void updateValue(double newValue) {
+				numtexthbValue = newValue;
+			}
+		});
+	}
+
+	private void generateFreqBinding(JTextField numtextf) {
+		numtextf.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				updateValue(getValue(numtextf));
+			}
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				updateValue(getValue(numtextf));
+			}
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				updateValue(getValue(numtextf));
+			}
+			public void updateValue(double newValue) {
+				numtextfValue = newValue;
+			}
+		});
 	}
 
 	public double getValue(JTextField textField){
@@ -450,6 +548,4 @@ public class GUI {
 		}
 		return "";
 	}
-	
-
 }
