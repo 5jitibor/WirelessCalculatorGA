@@ -6,7 +6,7 @@ public enum TypeCalculationEnum {
 
     public String toString(){
         return switch (this) {
-            case LOSSPROPAGATION -> "Loss Propagation";
+            case LOSSPROPAGATION -> "Propagation Loss";
             case COVERAGE -> "Coverage";
         };
     }
