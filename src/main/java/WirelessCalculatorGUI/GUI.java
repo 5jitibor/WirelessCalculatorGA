@@ -294,37 +294,36 @@ public class GUI {
 		c.gridx = 1;
 		c.gridy = 4;
 		c.insets = new Insets(0, 0, 10, 10);
-		JLabel numtextgtxTag = new JLabel("Gain transmitter");
-		numtextgtxTag.putClientProperty( "FlatLaf.styleClass", "h2" );
-		panel.add(numtextgtxTag, c);
-
-		c.gridy = 5;
-		c.insets = new Insets(0, 0, 20, 10);
-		panel.add(generateFieldWithUnits(numtextgtx, "dB"), c);
-
-		c.gridx = 0;
-		c.gridy = 6;
-		c.insets = new Insets(0, 0, 10, 20);
-		JLabel numtextgrxTag = new JLabel("Gain receiver");
-		numtextgrxTag.putClientProperty( "FlatLaf.styleClass", "h2" );
-		panel.add(numtextgrxTag, c);
-
-
-		c.gridy = 7;
-		c.insets = new Insets(0, 0, 20, 20);
-		panel.add(generateFieldWithUnits(numtextgrx, "dB"), c);
-
-		c.gridx = 1;
-		c.gridy = 6;
-		c.insets = new Insets(0, 0, 10, 10);
 		JLabel numtextsrxTag = new JLabel("Sensibility receiver");
 		numtextsrxTag.putClientProperty( "FlatLaf.styleClass", "h2" );
 		panel.add(numtextsrxTag, c);
 
-		c.gridy = 7;
+		c.gridy = 5;
 		c.insets = new Insets(0, 0, 20, 10);
 		panel.add(generateFieldWithUnits(numtextsrx, "dBm"), c);
 
+		c.gridx = 0;
+		c.gridy = 6;
+		c.insets = new Insets(0, 0, 10, 20);
+		JLabel numtextgtxTag = new JLabel("Gain transmitter");
+		numtextgtxTag.putClientProperty( "FlatLaf.styleClass", "h2" );
+		panel.add(numtextgtxTag, c);
+
+
+		c.gridy = 7;
+		c.insets = new Insets(0, 0, 20, 20);
+		panel.add(generateFieldWithUnits(numtextgtx, "dB"), c);
+
+		c.gridx = 1;
+		c.gridy = 6;
+		c.insets = new Insets(0, 0, 10, 10);
+		JLabel numtextgrxTag = new JLabel("Gain receiver");
+		numtextgrxTag.putClientProperty( "FlatLaf.styleClass", "h2" );
+		panel.add(numtextgrxTag, c);
+
+		c.gridy = 7;
+		c.insets = new Insets(0, 0, 20, 10);
+		panel.add(generateFieldWithUnits(numtextgrx, "dB"), c);
 
 		return panel;
 	}
