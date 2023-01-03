@@ -104,7 +104,11 @@ public class GUIResult {
 
 		for(TypeScenarioEnum result : resultsList.keySet()) {
 			double value = (double) Math.round(resultsList.get(result)*100d)/100d;
-			panel.add(generateCardPanel(result.toString(),value +" "+typeCalculation.toMetric()));
+			if (value >= 0) {
+				panel.add(generateCardPanel(result.toString(),value +" "+typeCalculation.toMetric()));
+			} else {
+				panel.add(generateCardPanel(result.toString(), "Out of range"));
+			}
 		}
 		return panel;
 	}

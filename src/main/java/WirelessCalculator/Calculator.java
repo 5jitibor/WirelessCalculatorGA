@@ -17,6 +17,11 @@ public class Calculator {
             results.put(type, common - results.get(type));
         }
 
+        if (f > 1500) {
+            results.put(TypeScenarioEnum.BIGCITY, results.get(TypeScenarioEnum.BIGCITY) + 3);
+        }
+
+
         return results;
     }
 
@@ -27,8 +32,17 @@ public class Calculator {
 
         HashMap<TypeScenarioEnum,Double> results = commonCalculateC(f, hm);
 
+        if (f > 1500) {
+            results.put(TypeScenarioEnum.BIGCITY, results.get(TypeScenarioEnum.BIGCITY) - 3);
+        }
+
         for(TypeScenarioEnum type : TypeScenarioEnum.values()){
-            results.put(type,Math.pow(10,(l - af + results.get(type))/b));
+            double finalResult = Math.pow(10,(l - af + results.get(type))/b);
+            if (finalResult >= 1 && finalResult <= 20) {
+                results.put(type, finalResult);
+            } else {
+                results.put(type, -1.0);
+            }
         }
 
         return results;
@@ -36,7 +50,7 @@ public class Calculator {
 
 
     public static double commonCalculateB(double hb){
-        return 44.9 + (6.55 * Math.log10(hb));
+        return 44.9 - (6.55 * Math.log10(hb));
     }
 
 
@@ -61,19 +75,18 @@ public class Calculator {
         }
         else{
             results.put(TypeScenarioEnum.BIGCITY, ((3.2 * Math.pow(log10(11.75 * hm), 2)) - 4.97));
-            if(f>1500){
+            /*if(f>1500){
                 results.put(TypeScenarioEnum.BIGCITY, results.get(TypeScenarioEnum.BIGCITY) - 3);
-            }
+            }*/
         }
 
         results.put(TypeScenarioEnum.MEDIUMSMALLCITY, ((((1.1 * Math.log10(f)) - 0.7) * hm) - (1.56 * Math.log10(f)) + 0.8));
 
         results.put(TypeScenarioEnum.SUBURBANCITY, (2 * Math.pow(log10(f/28), 2) + 5.4));
 
-        results.put(TypeScenarioEnum.RURAL, (4.78 * Math.pow(log10(f), 2) - (18.33 *(log10(f)) + 40.94)));
+        results.put(TypeScenarioEnum.RURAL, (4.78 * Math.pow(log10(f), 2) - (18.33 *(log10(f))) + 40.94));
 
         return  results;
-
     }
 
 

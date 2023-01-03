@@ -55,8 +55,8 @@ public class GUI {
 			//set icon on JFrame menu bar, as in Windows system
 			window.setIconImage(bImage);
 			//set icon on system tray, as in Mac OS X system
-			final Taskbar taskbar = Taskbar.getTaskbar();
-			taskbar.setIconImage(bImage);
+			//final Taskbar taskbar = Taskbar.getTaskbar();
+			//taskbar.setIconImage(bImage);
 		} catch (IOException ex) {
 			Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
 		}
@@ -294,7 +294,7 @@ public class GUI {
 		c.gridx = 1;
 		c.gridy = 4;
 		c.insets = new Insets(0, 0, 10, 10);
-		JLabel numtextsrxTag = new JLabel("Sensibility receiver");
+		JLabel numtextsrxTag = new JLabel("Sensitivity receiver");
 		numtextsrxTag.putClientProperty( "FlatLaf.styleClass", "h2" );
 		panel.add(numtextsrxTag, c);
 
@@ -419,10 +419,31 @@ public class GUI {
 
 			}
 			else{
-				double ptx = getValue(numtextptx);
-				double gtx = getValue(numtextgtx);
-				double srx = getValue(numtextsrx);
-				double grx = getValue(numtextgrx);
+				double ptx = 0;
+				try {
+					ptx = getValueNotEmpty(numtextptx, "Ptx");
+				} catch(Error err) {
+					error += err.getMessage();
+				}
+				double gtx = 0;
+				try {
+					gtx = getValueNotEmpty(numtextgtx, "Gtx");
+				} catch(Error err) {
+					error += err.getMessage();
+				}
+				double srx = 0;
+				try {
+					srx = getValueNotEmpty(numtextsrx, "Srx");
+				} catch(Error err) {
+					error += err.getMessage();
+				}
+				double grx = 0;
+				try {
+					grx = getValueNotEmpty(numtextgrx, "Grx");
+				} catch(Error err) {
+					error += err.getMessage();
+				}
+
 				if(error.isEmpty()){
 					new GUIResult(Calculator.calculateCoverage(f, hb, hm, ptx, gtx, grx, srx), TypeCalculationEnum.COVERAGE);
 
@@ -536,6 +557,14 @@ public class GUI {
 	public double getValue(JTextField textField){
 		if(textField.getText().isEmpty()){
 			return 0.0;
+		}
+		System.out.println(textField.getText());
+		return Double.parseDouble(textField.getText());
+	}
+
+	public double getValueNotEmpty(JTextField textField, String parameter){
+		if(textField.getText().isEmpty()){
+			throw new Error("Value not valid: " + parameter +" is mandatory\n");
 		}
 		System.out.println(textField.getText());
 		return Double.parseDouble(textField.getText());
