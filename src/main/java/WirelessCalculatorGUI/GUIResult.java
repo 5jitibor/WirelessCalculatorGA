@@ -31,8 +31,8 @@ public class GUIResult {
 			//set icon on JFrame menu bar, as in Windows system
 			window.setIconImage(bImage);
 			//set icon on system tray, as in Mac OS X system
-			final Taskbar taskbar = Taskbar.getTaskbar();
-			taskbar.setIconImage(bImage);
+			//final Taskbar taskbar = Taskbar.getTaskbar();
+			//taskbar.setIconImage(bImage);
 		} catch (IOException ex) {
 			Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
 		}
